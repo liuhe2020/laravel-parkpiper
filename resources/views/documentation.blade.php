@@ -61,34 +61,79 @@
   --data-urlencode "licence_plate=YY25YYY" \
   --data-urlencode "stay_start=2025-11-01T08:00:00" \
   --data-urlencode "stay_end=2025-11-30T08:00:00" \
+  --data-urlencode "include_related=true" \
+  --data-urlencode "include_all=true" \
   -H "Accept: application/json"</code></pre>
                         <p class="text-sm text-gray-700 dark:text-gray-200 mt-4 mb-1 font-semibold">Sample response for duration check</p>
                         <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
-    "licence_plate": "YY25YYY",
-    "status": "partially_covered",
-    "related_permits": null,
-    "all_permits": null,
-    "coverage": {
-        "covered_periods": [
-            {
-                "start": "2025-11-11 11:11:00",
-                "end": "2025-11-21 11:11:00",
-                "permit_id": 101
-            }
-        ],
-        "uncovered_periods": [
-            {
-                "start": "2025-11-01 08:00:00",
-                "end": "2025-11-11 11:11:00"
-            },
-            {
-                "start": "2025-11-21 11:11:00",
-                "end": "2025-11-30 08:00:00"
-            }
-        ]
+  "licence_plate": "YY25YYY",
+  "status": "partially_covered",
+  "related_permits": [
+    {
+      "id": 101,
+      "licence_plate": "YY25YYY",
+      "valid_from": "2025-11-11T11:11:00.000000Z",
+      "valid_to": "2025-11-21T11:11:00.000000Z",
+      "created_at": "2025-11-26T01:02:16.000000Z",
+      "updated_at": "2025-11-26T01:02:16.000000Z"
     },
-    "stay_start": "2025-11-01T08:00:00.000000Z",
-    "stay_end": "2025-11-30T08:00:00.000000Z"
+    {
+      "id": 102,
+      "licence_plate": "YY25YYY",
+      "valid_from": "2025-11-03T08:00:00.000000Z",
+      "valid_to": "2025-11-06T08:00:00.000000Z",
+      "created_at": "2025-11-26T03:30:04.000000Z",
+      "updated_at": "2025-11-26T03:30:04.000000Z"
+    }
+  ],
+  "all_permits": [
+    {
+      "id": 101,
+      "licence_plate": "YY25YYY",
+      "valid_from": "2025-11-11T11:11:00.000000Z",
+      "valid_to": "2025-11-21T11:11:00.000000Z",
+      "created_at": "2025-11-26T01:02:16.000000Z",
+      "updated_at": "2025-11-26T01:02:16.000000Z"
+    },
+    {
+      "id": 102,
+      "licence_plate": "YY25YYY",
+      "valid_from": "2025-11-03T08:00:00.000000Z",
+      "valid_to": "2025-11-06T08:00:00.000000Z",
+      "created_at": "2025-11-26T03:30:04.000000Z",
+      "updated_at": "2025-11-26T03:30:04.000000Z"
+    }
+  ],
+  "coverage": {
+    "covered_periods": [
+      {
+        "start": "2025-11-03 08:00:00",
+        "end": "2025-11-06 08:00:00",
+        "permit_id": 102
+      },
+      {
+        "start": "2025-11-11 11:11:00",
+        "end": "2025-11-21 11:11:00",
+        "permit_id": 101
+      }
+    ],
+    "uncovered_periods": [
+      {
+        "start": "2025-11-01 08:00:00",
+        "end": "2025-11-03 08:00:00"
+      },
+      {
+        "start": "2025-11-06 08:00:00",
+        "end": "2025-11-11 11:11:00"
+      },
+      {
+        "start": "2025-11-21 11:11:00",
+        "end": "2025-11-30 08:00:00"
+      }
+    ]
+  },
+  "stay_start": "2025-11-01T08:00:00.000000Z",
+  "stay_end": "2025-11-30T08:00:00.000000Z"
 }</code></pre>
                         </div>
                     </div>

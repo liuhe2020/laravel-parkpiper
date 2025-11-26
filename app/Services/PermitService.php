@@ -71,8 +71,8 @@ class PermitService
             $coverage = [
                 'covered_periods' => [],
                 'uncovered_periods' => [[
-                    'start' => $stayStart->toDateTimeString(),
-                    'end' => $stayEnd->toDateTimeString(),
+                    'start' => $stayStart->toIso8601String(),
+                    'end' => $stayEnd->toIso8601String(),
                 ]],
             ];
         } else {
@@ -127,8 +127,8 @@ class PermitService
                 $gapStart = max($permitEnd, $stayStart);
                 if ($gapStart < $current) {
                     $coverage['uncovered_periods'][] = [
-                        'start' => $gapStart->toDateTimeString(),
-                        'end' => $current->toDateTimeString(),
+                        'start' => $gapStart->toIso8601String(),
+                        'end' => $current->toIso8601String(),
                     ];
                 }
                 $current = $permitEnd->copy();
@@ -140,8 +140,8 @@ class PermitService
 
             if ($coveredStart < $coveredEnd) {
                 $coverage['covered_periods'][] = [
-                    'start' => $coveredStart->toDateTimeString(),
-                    'end' => $coveredEnd->toDateTimeString(),
+                    'start' => $coveredStart->toIso8601String(),
+                    'end' => $coveredEnd->toIso8601String(),
                     'permit_id' => $permit->id,
                 ];
                 $current = $coveredStart->copy();
@@ -156,8 +156,8 @@ class PermitService
         // If there's still time left at the start, add final uncovered period
         if ($current > $stayStart) {
             $coverage['uncovered_periods'][] = [
-                'start' => $stayStart->toDateTimeString(),
-                'end' => $current->toDateTimeString(),
+                'start' => $stayStart->toIso8601String(),
+                'end' => $current->toIso8601String(),
             ];
         }
 
