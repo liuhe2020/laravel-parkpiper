@@ -14,7 +14,7 @@
                 <div class="p-6">
                     <form action="{{ route('permits.check') }}" method="GET" class="space-y-5">
                         <div>
-                            <label for="licence_plate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">License plate</label>
+                            <label for="licence_plate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Licence plate</label>
                             <input 
                                 type="text" 
                                 name="licence_plate" 
