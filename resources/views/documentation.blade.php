@@ -19,7 +19,7 @@
                         <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Required query:</p>
                         <span class="font-mono text-sm dark:text-gray-300 bg-gray-100 dark:bg-gray-900 px-2 py-1 rounded">licence_plate</span>
                         <ul class="list-disc list-inside text-sm text-gray-600 dark:text-gray-300 mt-2 mb-2">
-                            <li>check_date: <span class="font-mono">YYYY-MM-DDTHH:MM:SS</span> (optional — defaults to now)</li>
+                            <li>check_date: <span class="font-mono">YYYY-MM-DDTHH:MM:SS</span> (optional — defaults to current time)</li>
                             <li>stay_start: <span class="font-mono">YYYY-MM-DDTHH:MM:SS</span> (required for duration check)</li>
                             <li>stay_end: <span class="font-mono">YYYY-MM-DDTHH:MM:SS</span> (required for duration check)</li>
                             <li>include_related: <span class="font-mono">boolean</span> (optional - include overlapping permits)</li>
@@ -28,34 +28,50 @@
                     </div>
 
                     <div>
-    <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Request JSON example - specific date check</p>
+    <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Request JSON example - current time check</p>
     <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
-    "licence_plate": "YY25YYY",
-    "check_date": "2025-11-11T12:00:00",
-}</code></pre>
-
-</div>
-                    <div>
-    <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Request JSON example - duration check</p>
-    <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
-    "licence_plate": "YY25YYY",
-    "stay_start": "2025-11-01T08:00:00",
-    "stay_end": "2025-11-30T08:00:00",
-    "include_related": true,
-    "include_all": true
+  "licence_plate": "YY25YYY"
 }</code></pre>
 </div>
 
                     <div>
-                        <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Specific date example</p>
+                        <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">cURL - current time check</p>
+                        <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">curl "https://parkpiper.vercel.app/api/permits/check" \
+-G \
+--data-urlencode "licence_plate=YY25YYY" \
+-H "Accept: application/json"</code></pre>
+                    </div>
+
+                    <div>
+    <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Request JSON example - specific date time check</p>
+    <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
+  "licence_plate": "YY25YYY",
+  "check_date": "2025-11-11T12:00:00",
+}</code></pre>
+</div>
+
+                    <div>
+                        <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">cURL - specific date time check</p>
                         <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">curl "https://parkpiper.vercel.app/api/permits/check" \
   -G \
   --data-urlencode "licence_plate=YY25YYY" \
   --data-urlencode "check_date=2025-11-11T12:00:00" \
   -H "Accept: application/json"</code></pre>
                     </div>
+
                     <div>
-                        <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Duration example</p>
+    <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Request JSON example - duration check</p>
+    <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
+  "licence_plate": "YY25YYY",
+  "stay_start": "2025-11-01T08:00:00",
+  "stay_end": "2025-11-30T08:00:00",
+  "include_related": true,
+  "include_all": true
+}</code></pre>
+</div>
+
+                    <div>
+                        <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">cURL - duration check</p>
                         <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">curl "https://parkpiper.vercel.app/api/permits/check" \
   -G \
   --data-urlencode "licence_plate=YY25YYY" \
@@ -64,7 +80,7 @@
   --data-urlencode "include_related=true" \
   --data-urlencode "include_all=true" \
   -H "Accept: application/json"</code></pre>
-                        <p class="text-sm text-gray-700 dark:text-gray-200 mt-4 mb-1 font-semibold">Sample response for duration check</p>
+                        <p class="text-sm text-gray-700 dark:text-gray-200 mt-4 mb-1 font-semibold">Response JSON example for duration check</p>
                         <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
   "licence_plate": "YY25YYY",
   "status": "partially_covered",
@@ -149,28 +165,28 @@
                         <div>
                             <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Request JSON example</p>
                             <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
-        "licence_plate": "YY25YYY",
-        "valid_from": "2025-11-23T08:00:00",
-        "valid_to": "2025-11-24T08:00:00"
-    }</code></pre>
+  "licence_plate": "YY25YYY",
+  "valid_from": "2025-11-23T08:00:00",
+  "valid_to": "2025-11-24T08:00:00"
+}</code></pre>
                         </div>
                         <div>
                             <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">cURL</p>
                             <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">curl -X POST https://parkpiper.vercel.app/api/permits \
-      -H "Accept: application/json" \
-      -H "Content-Type: application/json" \
-      -d '{"licence_plate":"YY25YYY","valid_from":"2025-11-23T08:00:00","valid_to":"2025-11-24T08:00:00"}'</code></pre>
+-H "Accept: application/json" \
+-H "Content-Type: application/json" \
+-d '{"licence_plate":"YY25YYY","valid_from":"2025-11-23T08:00:00","valid_to":"2025-11-24T08:00:00"}'</code></pre>
                         </div>
                         <div>
-                            <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Success (201)</p>
+                            <p class="text-sm text-gray-700 dark:text-gray-200 font-semibold mb-1">Response JSON example</p>
                             <pre class="bg-gray-100 dark:bg-gray-900 p-3 rounded text-sm overflow-x-auto"><code class="font-mono text-gray-800 dark:text-gray-200">{
-        "id": 123,
-        "licence_plate": "YY25YYY",
-        "valid_from": "2025-11-23T08:00:00",
-        "valid_to": "2025-11-24T08:00:00",
-        "created_at": "...",
-        "updated_at": "..."
-    }</code></pre>
+  "id": 123,
+  "licence_plate": "YY25YYY",
+  "valid_from": "2025-11-23T08:00:00",
+  "valid_to": "2025-11-24T08:00:00",
+  "created_at": "...",
+  "updated_at": "..."
+}</code></pre>
                         </div>
                     </div>
                 </div>
