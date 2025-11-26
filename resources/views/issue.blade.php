@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Issue Permit | ParkPiper')
+
 @section('content')
     <div class="max-w-xl mx-auto py-16">
         <x-logo />

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'API Documentation | ParkPiper')
+
 @section('content')
     <div class="max-w-5xl mx-auto pt-8 pb-16">
         <h1 class="text-3xl font-semibold text-gray-900 dark:text-gray-100 mb-2">API Documentation</h1>
@@ -123,28 +125,28 @@
   "coverage": {
     "covered_periods": [
       {
-        "start": "2025-11-03 08:00:00",
-        "end": "2025-11-06 08:00:00",
+        "start": "2025-11-03T08:00:00.000000Z",
+        "end": "2025-11-06T08:00:00.000000Z",
         "permit_id": 102
       },
       {
-        "start": "2025-11-11 11:11:00",
-        "end": "2025-11-21 11:11:00",
+        "start": "2025-11-11T11:11:00.000000Z",
+        "end": "2025-11-21T11:11:00.000000Z",
         "permit_id": 101
       }
     ],
     "uncovered_periods": [
       {
-        "start": "2025-11-01 08:00:00",
-        "end": "2025-11-03 08:00:00"
+        "start": "2025-11-01T08:00:00.000000Z",
+        "end": "2025-11-03T08:00:00.000000Z"
       },
       {
-        "start": "2025-11-06 08:00:00",
-        "end": "2025-11-11 11:11:00"
+        "start": "2025-11-06T08:00:00.000000Z",
+        "end": "2025-11-11T11:11:00.000000Z"
       },
       {
-        "start": "2025-11-21 11:11:00",
-        "end": "2025-11-30 08:00:00"
+        "start": "2025-11-21T11:11:00.000000Z",
+        "end": "2025-11-30T08:00:00.000000Z"
       }
     ]
   },
@@ -184,8 +186,8 @@
   "licence_plate": "YY25YYY",
   "valid_from": "2025-11-23T08:00:00",
   "valid_to": "2025-11-24T08:00:00",
-  "created_at": "...",
-  "updated_at": "..."
+  "created_at": "2025-11-21T11:11:00.000000Z",
+  "updated_at": "2025-11-21T11:11:00.000000Z"
 }</code></pre>
                         </div>
                     </div>

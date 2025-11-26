@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Permits | ParkPiper')
+
 @section('content')
     <div class="max-w-5xl mx-auto pt-8 pb-16">
         @php
