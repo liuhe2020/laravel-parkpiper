@@ -116,24 +116,27 @@ class PermitService
             'uncovered_periods' => [],
         ];
 
-        $current = $stayStart->copy();
+        $current = $stayEnd->copy();
 
         foreach ($permits as $permit) {
             $permitStart = $permit->valid_from;
             $permitEnd = $permit->valid_to;
 
-            if ($permitStart > $current) {
-                $gapEnd = min($permitStart, $stayEnd);
-                if ($current < $gapEnd) {
+            // If there's a gap between current and this permit's end, add uncovered period
+            if ($permitEnd < $current) {
+                $gapStart = max($permitEnd, $stayStart);
+                if ($gapStart < $current) {
                     $coverage['uncovered_periods'][] = [
-                        'start' => $current->toDateTimeString(),
-                        'end' => $gapEnd->toDateTimeString(),
+                        'start' => $gapStart->toDateTimeString(),
+                        'end' => $current->toDateTimeString(),
                     ];
                 }
+                $current = $permitEnd->copy();
             }
 
-            $coveredStart = max($current, $permitStart);
-            $coveredEnd = min($stayEnd, $permitEnd);
+            // Add covered period if it overlaps with the window
+            $coveredStart = max($permitStart, $stayStart);
+            $coveredEnd = min($permitEnd, $current);
 
             if ($coveredStart < $coveredEnd) {
                 $coverage['covered_periods'][] = [
@@ -141,21 +144,26 @@ class PermitService
                     'end' => $coveredEnd->toDateTimeString(),
                     'permit_id' => $permit->id,
                 ];
-
-                $current = $coveredEnd->copy();
+                $current = $coveredStart->copy();
             }
 
-            if ($current >= $stayEnd) {
+            // If we've reached or passed the start, stop
+            if ($current <= $stayStart) {
                 break;
             }
         }
 
-        if ($current < $stayEnd) {
+        // If there's still time left at the start, add final uncovered period
+        if ($current > $stayStart) {
             $coverage['uncovered_periods'][] = [
-                'start' => $current->toDateTimeString(),
-                'end' => $stayEnd->toDateTimeString(),
+                'start' => $stayStart->toDateTimeString(),
+                'end' => $current->toDateTimeString(),
             ];
         }
+
+        // Reverse arrays to chronological order
+        $coverage['covered_periods'] = array_reverse($coverage['covered_periods']);
+        $coverage['uncovered_periods'] = array_reverse($coverage['uncovered_periods']);
 
         return $coverage;
     }
