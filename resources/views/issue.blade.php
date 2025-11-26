@@ -17,7 +17,7 @@
                 <form action="{{ route('permits.store') }}" method="POST" class="space-y-5">
                     @csrf
                     <div>
-                        <label for="licence_plate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">License plate</label>
+                        <label for="licence_plate" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Licence plate</label>
                         <input 
                             type="text" 
                             name="licence_plate" 
