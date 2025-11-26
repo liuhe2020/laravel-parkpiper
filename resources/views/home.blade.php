@@ -197,10 +197,10 @@
                                             <p class="font-semibold">Uncovered windows</p>
                                             @foreach($coverage['uncovered_periods'] as $gap)
                                             @php
-                                                $start = \Carbon\Carbon::parse($gap['start'])->timezone('Europe/London');
-                                                $end = \Carbon\Carbon::parse($gap['end'])->timezone('Europe/London');
+                                                $start = \Carbon\Carbon::parse($gap['start']);
+                                                $end = \Carbon\Carbon::parse($gap['end']);
 
-                                                $totalMinutes = $start->diffInMinutes($end);
+                                                $totalMinutes = (int) $start->diffInMinutes($end);
                                                 $days = intdiv($totalMinutes, 1440);
                                                 $hours = intdiv($totalMinutes % 1440, 60);
                                                 $minutes = $totalMinutes % 60;
@@ -241,13 +241,13 @@
                                             <div class="flex justify-between">
                                                 <span class="text-gray-600 dark:text-gray-400">From</span>
                                                 <span class="text-gray-900 dark:text-white">
-                                                    {{ $permitItem->valid_from->timezone('Europe/London')->format('d M Y - H:i') }}
+                                                    {{ $permitItem->valid_from->format('d M Y - H:i') }}
                                                 </span>
                                             </div>
                                             <div class="flex justify-between">
                                                 <span class="text-gray-600 dark:text-gray-400">To</span>
                                                 <span class="text-gray-900 dark:text-white">
-                                                    {{ $permitItem->valid_to->timezone('Europe/London')->format('d M Y - H:i') }}
+                                                    {{ $permitItem->valid_to->format('d M Y - H:i') }}
                                                 </span>
                                             </div>
                                         </div>
@@ -272,13 +272,13 @@
                                             <div class="flex justify-between">
                                                 <span class="text-gray-600 dark:text-gray-400">From</span>
                                                 <span class="text-gray-900 dark:text-white">
-                                                    {{ $permitItem->valid_from->timezone('Europe/London')->format('d M Y - H:i') }}
+                                                    {{ $permitItem->valid_from->format('d M Y - H:i') }}
                                                 </span>
                                             </div>
                                             <div class="flex justify-between">
                                                 <span class="text-gray-600 dark:text-gray-400">To</span>
                                                 <span class="text-gray-900 dark:text-white">
-                                                    {{ $permitItem->valid_to->timezone('Europe/London')->format('d M Y - H:i') }}
+                                                    {{ $permitItem->valid_to->format('d M Y - H:i') }}
                                                 </span>
                                             </div>
                                         </div>
