@@ -2,6 +2,7 @@
 
 @section('content')
     <div class="max-w-xl mx-auto py-16">
+        <!-- Logo -->
         <x-logo />
 
             <!-- Check Status Card -->

@@ -19,6 +19,21 @@ class PermitController extends Controller
             'valid_to' => 'required|date|after:valid_from',
         ]);
 
+        // Custom overlap validation
+        $from = new \DateTime($validated['valid_from']);
+        $to = new \DateTime($validated['valid_to']);
+
+        $overlap = \App\Models\Permit::where('licence_plate', strtoupper(str_replace(' ', '', $validated['licence_plate'])))
+            ->where('valid_from', '<', $to)
+            ->where('valid_to', '>', $from)
+            ->exists();
+
+        if ($overlap) {
+            return response()->json([
+                'message' => 'Permit overlaps with an existing permit for this licence plate.'
+            ], 422);
+        }
+
         $permit = $this->service->createPermit($validated);
 
         return response()->json($permit, 201);

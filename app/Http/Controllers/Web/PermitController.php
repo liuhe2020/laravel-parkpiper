@@ -32,23 +32,31 @@ class PermitController extends Controller
         $validated = $request->validateWithBag('issue', [
             'licence_plate' => ['required', 'string', 'regex:/^[A-Za-z0-9 ]{1,8}$/'],
             'valid_from' => 'required|date',
-            'valid_to' => [
-                'required',
-                'date',
-
-                // Using native DateTime objects inside the closure for robustness
-                function ($attributes, $value, $fail) use ($request) {
-                    // The 'date' rule guarantees these strings are parsable
-                    $from = new \DateTime($request->input('valid_from'));
-                    $to = new \DateTime($value);
-
-                    // Check if the difference is less than 24 hours (86400 seconds)
-                    if ($to->getTimestamp() - $from->getTimestamp() < 86400) {
-                        $fail('"Valid to" must be at least 24 hours after "Valid from".');
-                    }
-                },
-            ],
+            'valid_to' => 'required|date|after:valid_from',
         ]);
+
+        $from = new \DateTime($validated['valid_from']);
+        $to = new \DateTime($validated['valid_to']);
+
+        // 24 hour rule
+        if ($to->getTimestamp() - $from->getTimestamp() < 86400) {
+            return back()
+                ->withErrors(['valid_to' => '"Valid to" must be at least 24 hours after "Valid from".'], 'issue')
+                ->withInput();
+        }
+
+        // Overlap rule
+        $licencePlate = strtoupper(str_replace(' ', '', $validated['licence_plate']));
+        $overlap = \App\Models\Permit::where('licence_plate', $licencePlate)
+            ->where('valid_from', '<', $to)
+            ->where('valid_to', '>', $from)
+            ->exists();
+
+        if ($overlap) {
+            return back()
+                ->withErrors(['valid_to' => 'Permit overlaps with an existing permit for this licence plate.'], 'issue')
+                ->withInput();
+        }
 
         $this->service->createPermit($validated);
 

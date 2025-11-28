@@ -4,6 +4,7 @@
 
 @section('content')
     <div class="max-w-xl mx-auto py-16">
+        <!-- Logo -->
         <x-logo />
 
        <!-- Issue Permit Card -->

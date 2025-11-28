@@ -15,7 +15,6 @@
     </script>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @stack('head')
 </head>
 <body class="p-4 sm:px-6 lg:px-8 bg-white dark:bg-gray-900 transition-colors duration-300">
     <header class="flex items-center gap-6 w-full justify-between">

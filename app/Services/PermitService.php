@@ -48,6 +48,8 @@ class PermitService
         ];
     }
 
+    // Assumption: permits do not overlap.
+    // If overlapping permits are possible, should first merge them before running coverage calculations
     public function checkDuration(string $licencePlate, Carbon $stayStart, Carbon $stayEnd, array $options = []): array
     {
         /**
@@ -55,7 +57,7 @@ class PermitService
          *   'include_related' => bool
          *   'include_all'     => bool
          *
-         * coverage is always returned for duration checks (not optional)
+         * coverage is always returned for duration checks, not null
          */
         $opts = array_merge([
             'include_related' => false,
@@ -64,7 +66,11 @@ class PermitService
 
         $formattedPlate = $this->formatPlate($licencePlate);
 
-        $permits = $this->getPermitsForWindow($formattedPlate, $stayStart, $stayEnd);
+         $permits = Permit::where('licence_plate', $formattedPlate)
+            ->where('valid_from', '<', $stayEnd)
+            ->where('valid_to', '>', $stayStart)
+            ->orderByDesc('valid_from')
+            ->get();
 
         if ($permits->isEmpty()) {
             $status = 'not_covered';
@@ -95,16 +101,6 @@ class PermitService
     public function getAllPermits(string $formattedPlate): Collection
     {
         return Permit::where('licence_plate', $formattedPlate)
-            ->orderByDesc('valid_from')
-            ->get();
-    }
-
-    // helpers
-    private function getPermitsForWindow(string $formattedPlate, Carbon $stayStart, Carbon $stayEnd): Collection
-    {
-        return Permit::where('licence_plate', $formattedPlate)
-            ->where('valid_from', '<', $stayEnd)
-            ->where('valid_to', '>', $stayStart)
             ->orderByDesc('valid_from')
             ->get();
     }
